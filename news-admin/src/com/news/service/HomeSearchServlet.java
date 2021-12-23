@@ -48,7 +48,7 @@ public class HomeSearchServlet extends HttpServlet {
         ArrayList<News> news = searchDao.SearchNewsByContent(search_text);
         HttpSession session = request.getSession();
         session.setAttribute("SearchResult", news);
-        response.sendRedirect("searchresult.jsp");
+        response.sendRedirect("usersearchresult.jsp");
         System.out.println(search_text);
     }
 

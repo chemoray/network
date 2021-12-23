@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.news.convertor.StringToInt;
-import com.news.dao.UpdateNewsDao;
+import com.news.dao.NewsDao;
+import com.news.dao.SearchDao;
 import com.news.pojo.News;
 
 /**
@@ -40,6 +41,7 @@ public class NewsUpdateServlet extends HttpServlet {
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String action = request.getParameter("action");
+        int state = Integer.parseInt(request.getParameter("state"));
         StringToInt stringToInt = new StringToInt();
         int category_id = stringToInt.getStringToInt(category);
         int parseInt = Integer.parseInt(id);
@@ -49,13 +51,13 @@ public class NewsUpdateServlet extends HttpServlet {
         news.setCategory_id(category_id);
         news.setTitle(title);
         news.setContent(content);
-        news.setState(1);
+        news.setState(state);
 
         java.util.Date date = new java.util.Date();
         news.setUpdate_date(new Date(date.getTime()));
 
-        UpdateNewsDao updateNewsDao = new UpdateNewsDao();
-        int updateNews = updateNewsDao.updateNews(news);
+        NewsDao newsDao = new NewsDao();
+        int updateNews = newsDao.updateNews(news);
         if(updateNews!=0){
 
             String msg="success";

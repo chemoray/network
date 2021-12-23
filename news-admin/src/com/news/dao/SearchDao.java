@@ -1,5 +1,8 @@
 package com.news.dao;
-
+/*
+* 根据内容 标题 种类名 新闻id选择新闻
+*
+* */
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -119,7 +122,7 @@ public class SearchDao {
         Connection connection = C3p0Utils.getConnection();
         try {
             Statement statement = connection.createStatement();
-            String sql = "select * from news where id = "+ Newsid;
+            String sql = "select * from news where id = " + Newsid ;
             ResultSet resultSet = statement.executeQuery(sql);
             while(resultSet.next()) {
                 News news = new News();

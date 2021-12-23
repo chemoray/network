@@ -63,7 +63,7 @@ public class AddNewsServlet extends HttpServlet {
         news.setContent(content);
         news.setCreate_date(sqlDate);
         news.setUpdate_date(sqlDate);
-        news.setState(1);
+        news.setState(0);/*未审核*/
 
         NewsDao newsDao = new NewsDao();
         int insertNews = newsDao.insertNews(news);

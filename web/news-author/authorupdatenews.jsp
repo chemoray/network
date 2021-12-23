@@ -108,6 +108,7 @@
 			<tr>
 				<td><p style="line-height: 13px">
 						<input type="hidden" name="id" value="${Newsdetail.id}">
+						<input type="hidden" name="state" value="${Newsdetail.state}">
 						<input type="submit" value="提交">
 					</p></td>
 				<td><input type="reset" value="重置"></td>

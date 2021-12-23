@@ -1,5 +1,5 @@
 package com.news.dao;
-
+/*添加 删除 选择 编辑管理员*/
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,6 +75,21 @@ public class AdminDao {
         }
         return 0;
 
+    }
+
+    public int loginDao(AdminUser adminUser){
+        try {
+            Connection connection = C3p0Utils.getConnection();
+            Statement statement = connection.createStatement();
+            String sql = "select admin.username,admin.password from admin where username='" + adminUser.getUsername() + "' and password='" + adminUser.getPassword()+"'";
+            ResultSet executeQuery = statement.executeQuery(sql);
+            if (executeQuery.next()) {
+                return 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
 

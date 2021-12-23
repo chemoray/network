@@ -1,5 +1,8 @@
 package com.news.dao;
-
+/*添加 删除 选择 编辑作者
+ *包含匹配用户登录
+ *
+ * */
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -24,7 +24,7 @@ import com.news.pojo.Category;
 /**
  * Servlet Filter implementation class CategoryList
  */
-@WebFilter(filterName="/CategoryList", urlPatterns={"/news-admin/categorytable.jsp", "/news-admin/deletecategorytable.jsp", "/home.jsp","/newsitem.jsp","/categorynews.jsp"})
+@WebFilter(filterName="/CategoryList", urlPatterns={"/news-admin/categorytable.jsp", "/news-admin/deletecategorytable.jsp", "/home.jsp","/newsitem.jsp","/categorynews.jsp","/usersearchresult.jsp"})
 public class CategoryList implements Filter {
 
     /**

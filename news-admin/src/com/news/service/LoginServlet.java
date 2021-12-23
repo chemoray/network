@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.news.dao.LoginDao;
+import com.news.dao.AdminDao;
 import com.news.pojo.AdminUser;
 
 /**
@@ -48,8 +48,8 @@ public class LoginServlet extends HttpServlet {
         AdminUser adminUser = new AdminUser();
         adminUser.setUsername(username);
         adminUser.setPassword(password);
-        LoginDao loginDao = new LoginDao();
-        int dao = loginDao.loginDao(adminUser);
+        AdminDao adminDao = new AdminDao();
+        int dao = adminDao.loginDao(adminUser);
         HttpSession session = request.getSession();
         String check_code = (String) session.getAttribute("check_code");
         if (dao == 1 && check_code.equals(valiDate)) {

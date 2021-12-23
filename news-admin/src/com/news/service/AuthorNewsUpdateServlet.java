@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.news.convertor.StringToInt;
-import com.news.dao.UpdateNewsDao;
+import com.news.dao.NewsDao;
 import com.news.pojo.News;
 
 /**
@@ -52,8 +52,8 @@ public class AuthorNewsUpdateServlet extends HttpServlet {
         java.util.Date date = new java.util.Date();
         news.setUpdate_date(new Date(date.getTime()));
 
-        UpdateNewsDao updateNewsDao = new UpdateNewsDao();
-        int updateNews = updateNewsDao.updateNews(news);
+        NewsDao newsDao = new NewsDao();
+        int updateNews = newsDao.updateNews(news);
         if(updateNews!=0){
             String msg="success";
             HttpSession session = request.getSession();

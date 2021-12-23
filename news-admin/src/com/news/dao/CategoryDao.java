@@ -1,5 +1,7 @@
 package com.news.dao;
-
+/*
+* 插入 编辑 选择 删除种类
+* */
 import java.sql.*;
 
 import com.news.dbutils.C3p0Utils;
