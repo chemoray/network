@@ -24,7 +24,7 @@
 				<td width="200">更新时间</td>
 				<td width="100">操作</td>
 			</tr>
-			<c:forEach items="${authornews}" var="news">
+			<c:forEach items="${pulishauthornews}" var="news">
 				<tr align="center">
 					<td><input type="checkbox" value="${news.getId()}"
 						name="newsid"/></td>
@@ -38,7 +38,20 @@
 					<td><a href="../DeleteNewsServlet?id=${news.getId()}&action=author&authorid=${author_login_info.id}">删除</a>&nbsp;<a href="../NewsSearchServlet?newsid=${news.getId()}&action=author">编辑</a>
 				</tr>
 			</c:forEach>
-			
+			<c:forEach items="${checkauthornews}" var="news">
+				<tr align="center">
+					<td><input type="checkbox" value="${news.getId()}"
+							   name="newsid"/></td>
+					<td>${news.getId()}</td>
+					<td>${news.getCategory_id()}</td>
+					<td>${news.getTitle()}</td>
+					<td>${news.getContent()}</td>
+					<td>${news.getState()}</td>
+					<td>${news.getCreate_date()}</td>
+					<td>${news.getUpdate_date()}</td>
+					<td><a href="../DeleteNewsServlet?id=${news.getId()}&action=author&authorid=${author_login_info.id}">删除</a>&nbsp;<a href="../NewsSearchServlet?newsid=${news.getId()}&action=author">编辑</a>
+				</tr>
+			</c:forEach>
 		</table>
 	</form>
 </body>

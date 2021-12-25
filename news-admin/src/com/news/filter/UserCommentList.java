@@ -19,18 +19,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.news.dbutils.C3p0Utils;
-import com.news.pojo.News;
+import com.news.pojo.Comment;
 
 /**
  * Servlet Filter implementation class NewsListFilter
  */
-@WebFilter(filterName="/NewsListFilter" ,urlPatterns={"/news-admin/show.jsp","/news-admin/commenttable.jsp"  ,"/news-admin/deletenews.jsp", "/home.jsp"})
-public class NewsListFilter implements Filter {
-
+@WebFilter(filterName="/UserCommentList" ,urlPatterns={"/userhome.jsp"})
+public class UserCommentList implements Filter {
     /**
      * Default constructor.
      */
-    public NewsListFilter() {
+    public  UserCommentList() {
         // TODO Auto-generated constructor stub
     }
 
@@ -48,36 +47,32 @@ public class NewsListFilter implements Filter {
         // TODO Auto-generated method stub
         // place your code here
         Connection connection = C3p0Utils.getConnection();
+        String user_id = request.getParameter("user_id");
         try {
             Statement createStatement = connection.createStatement();
-            String sql="select * from news where state=1";
-            ResultSet executeQuery = createStatement.executeQuery(sql);
-            ArrayList<News> list = new ArrayList<>();
-            while(executeQuery.next()){
-                News news = new News();
-                int id = executeQuery.getInt("id");
-                int category_id = executeQuery.getInt("category_id");
-                int author_id = executeQuery.getInt("authorId");
-                String title = executeQuery.getString("title");
-                String content = executeQuery.getString("content");
-                int state = executeQuery.getInt("state");
-                Date create_date = executeQuery.getDate("create_date");
-                Date update_date = executeQuery.getDate("update_date");
-
-                news.setId(id);
-                news.setCategory_id(category_id);
-                news.setAuthorId(author_id);
-                news.setTitle(title);
-                news.setContent(content);
-                news.setState(state);
-                news.setCreate_date(create_date);
-                news.setUpdate_date(update_date);
-
-                list.add(news);
+            String sql="select * from comment where user_id='" + user_id+"'";
+            ResultSet resultSet = createStatement.executeQuery(sql);
+            ArrayList<Comment> list = new ArrayList<>();
+            while(resultSet.next()){
+                Comment comment = new Comment();
+                int comment_id=resultSet.getInt("comment_id");
+                int user = resultSet.getInt("user_id");
+                int news = resultSet.getInt("news_id");
+                String news_comment = resultSet.getString("content");
+                Date create_time = resultSet.getDate("create_time");
+                Date update_time = resultSet.getDate("update_time");
+                comment.setComment_id(comment_id);
+                comment.setUser_id(user);
+                comment.setNews_id(news);
+                comment.setContent(news_comment);
+                comment.setCreate_time(create_time);
+                comment.setUpdate_time(update_time);
+                list.add(comment);
             }
+            System.out.println("usercommentlistfilter");
             HttpServletRequest request2 = (HttpServletRequest) request;
             HttpSession session = request2.getSession();
-            session.setAttribute("news", list);
+            session.setAttribute("userComment", list);
             chain.doFilter(request, response);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -86,7 +81,6 @@ public class NewsListFilter implements Filter {
 
         // pass the request along the filter chain
     }
-
     /**
      * @see Filter#init(FilterConfig)
      */
@@ -95,4 +89,5 @@ public class NewsListFilter implements Filter {
     }
 
 }
+
 

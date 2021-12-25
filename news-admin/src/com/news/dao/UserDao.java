@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Date;
 
 import com.news.dbutils.C3p0Utils;
 import com.news.pojo.User;
@@ -64,7 +65,13 @@ public class UserDao {
             if (executeQuery.next()) {
                 User user2 = new User();
                 String user_name = executeQuery.getString("user_name");
+                int user_id = executeQuery.getInt("user_id");
+                String user_email = executeQuery.getString("email");
+                Date create_date = executeQuery.getDate("create_date");
                 user2.setName(user_name);
+                user2.setCreate_date(create_date);
+                user2.setEmail(user_email);
+                user2.setId(user_id);
                 return user2;
             }
         } catch (Exception e) {

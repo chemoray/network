@@ -13,10 +13,11 @@
 	<form action="#" method="post" >
 		<table border="1" cellspacing="2" bgcolor="#ADD8E6" >
 			<tr align="center">
-			    <td width="40"> </td>
+				<td width="40"> </td>
 				<td width="100">新闻ID</td>
 				<td width="100">分类ID</td>
-				<td width="160">新闻标题</td>
+				<td width="100">作者ID</td>
+				<td width="170">新闻标题</td>
 				<td width="300">新闻内容</td>
 				<td width="100">新闻状态</td>
 				<td width="200">创建时间</td>
@@ -26,9 +27,10 @@
 			<c:forEach items="${news}" var="news">
 				<tr align="center">
 					<td><input type="checkbox" value="${news.getId()}"
-						name="newsid"/></td>
+							   name="newsid"></td>
 					<td>${news.getId()}</td>
 					<td>${news.getCategory_id()}</td>
+					<td>${news.getAuthorId()}</td>
 					<td>${news.getTitle()}</td>
 					<td>${news.getContent()}</td>
 					<td>${news.getState()}</td>
@@ -36,6 +38,7 @@
 					<td>${news.getUpdate_date()}</td>
 					<td><a href="../DeleteNewsServlet?id=${news.getId()}&action=admin">删除</a>&nbsp;<a href="../NewsSearchServlet?newsid=${news.getId()}&action=admin">编辑</a>
 				</tr>
+
 			</c:forEach>
 			
 		</table>

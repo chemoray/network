@@ -1,5 +1,4 @@
 package com.news.filter;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -24,13 +23,12 @@ import com.news.pojo.News;
 /**
  * Servlet Filter implementation class NewsListFilter
  */
-@WebFilter(filterName="/NewsListFilter" ,urlPatterns={"/news-admin/show.jsp","/news-admin/commenttable.jsp"  ,"/news-admin/deletenews.jsp", "/home.jsp"})
-public class NewsListFilter implements Filter {
-
+@WebFilter(filterName="/AuthorCheckNewsList" ,urlPatterns={"/news-author/authorshow.jsp", "/news-author/authordeletenews.jsp"})
+public class AuthorCheckNewsList implements Filter {
     /**
      * Default constructor.
      */
-    public NewsListFilter() {
+    public  AuthorCheckNewsList() {
         // TODO Auto-generated constructor stub
     }
 
@@ -48,16 +46,19 @@ public class NewsListFilter implements Filter {
         // TODO Auto-generated method stub
         // place your code here
         Connection connection = C3p0Utils.getConnection();
+        String author_id = request.getParameter("authorid");
+        System.out.println("author_id");
+        System.out.println(author_id);
         try {
             Statement createStatement = connection.createStatement();
-            String sql="select * from news where state=1";
+            String sql="select * from news where authorId='" + author_id+"' and state=0";
             ResultSet executeQuery = createStatement.executeQuery(sql);
             ArrayList<News> list = new ArrayList<>();
             while(executeQuery.next()){
                 News news = new News();
                 int id = executeQuery.getInt("id");
                 int category_id = executeQuery.getInt("category_id");
-                int author_id = executeQuery.getInt("authorId");
+                int author = executeQuery.getInt("authorId");
                 String title = executeQuery.getString("title");
                 String content = executeQuery.getString("content");
                 int state = executeQuery.getInt("state");
@@ -66,18 +67,18 @@ public class NewsListFilter implements Filter {
 
                 news.setId(id);
                 news.setCategory_id(category_id);
-                news.setAuthorId(author_id);
+                news.setAuthorId(author);
                 news.setTitle(title);
                 news.setContent(content);
                 news.setState(state);
                 news.setCreate_date(create_date);
                 news.setUpdate_date(update_date);
-
                 list.add(news);
             }
+            System.out.println("authornewsfilter");
             HttpServletRequest request2 = (HttpServletRequest) request;
             HttpSession session = request2.getSession();
-            session.setAttribute("news", list);
+            session.setAttribute("checkauthornews", list);
             chain.doFilter(request, response);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -95,4 +96,5 @@ public class NewsListFilter implements Filter {
     }
 
 }
+
 

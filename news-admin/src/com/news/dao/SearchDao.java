@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import com.news.dbutils.C3p0Utils;
 import com.news.pojo.News;
+import com.news.pojo.Comment;
 
 public class SearchDao {
 
@@ -151,6 +152,69 @@ public class SearchDao {
         return null;
 
     }
+
+    public ArrayList<Comment> SearchCommentByID(String Newsid){
+        Connection connection = C3p0Utils.getConnection();
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "select * from comment where news_id = " + Newsid ;
+            ResultSet resultSet = statement.executeQuery(sql);
+            ArrayList<Comment> list = new ArrayList<>();
+            while(resultSet.next()) {
+                Comment comment = new Comment();
+                int id = resultSet.getInt("user_id");
+                int news_id = resultSet.getInt("news_id");
+                String news_comment = resultSet.getString("content");
+                Date create_time = resultSet.getDate("create_time");
+                Date update_time = resultSet.getDate("update_time");
+                comment.setUser_id(id);
+                comment.setNews_id(news_id);
+                comment.setContent(news_comment);
+                comment.setCreate_time(create_time);
+                comment.setUpdate_time(update_time);
+                list.add(comment);
+                return list;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public Comment SearchCommentByCommentID(int comment_id){
+        Connection connection = C3p0Utils.getConnection();
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "select * from comment where comment_id = " +comment_id;
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()) {
+                Comment comment  = new  Comment ();
+                int id = resultSet.getInt("user_id");
+                int news_id = resultSet.getInt("news_id");
+                String news_comment = resultSet.getString("content");
+                Date create_time = resultSet.getDate("create_time");
+                Date update_time = resultSet.getDate("update_time");
+                comment.setUser_id(id);
+                comment.setComment_id(comment_id);
+                comment.setNews_id(news_id);
+                comment.setContent(news_comment);
+                comment.setCreate_time(create_time);
+                comment.setUpdate_time(update_time);
+                return comment;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+
+
+
 
 }
 

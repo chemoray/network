@@ -21,10 +21,23 @@
 				<td width="200">创建时间</td>
 				<td width="200">更新时间</td>
 			</tr>
-			<c:forEach items="${authornews}" var="news">
+			<c:forEach items="${publishauthornews}" var="news">
 				<tr align="center">
 					<td><input type="checkbox" value="${news.getId()}"
 						name="newsid"></td>
+					<td>${news.getId()}</td>
+					<td>${news.getCategory_id()}</td>
+					<td>${news.getTitle()}</td>
+					<td>${news.getContent()}</td>
+					<td>${news.getState()}</td>
+					<td>${news.getCreate_date()}</td>
+					<td>${news.getUpdate_date()}</td>
+				</tr>
+			</c:forEach>
+			<c:forEach items="${checkauthornews}" var="news">
+				<tr align="center">
+					<td><input type="checkbox" value="${news.getId()}"
+							   name="newsid"></td>
 					<td>${news.getId()}</td>
 					<td>${news.getCategory_id()}</td>
 					<td>${news.getTitle()}</td>

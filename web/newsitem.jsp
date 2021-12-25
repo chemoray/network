@@ -20,6 +20,40 @@
   <link rel="stylesheet" type="text/css" href="./asset/css/plugins/animate.min.css"/>
   <link rel="stylesheet" type="text/css" href="./asset/css/plugins/fullcalendar.min.css"/>
   <link href="./asset/css/style.css" rel="stylesheet">
+  <script>
+    //定义敏感字符
+    var forbiddenArray =['草','日','黄色'];
+    //定义函数
+    function Checkfunc(){
+      //验证是否登录
+     if (${user_login == null}){
+       alert("请登陆后评论！")
+       return false;
+     }
+    //获取文本输入框中的内容
+
+      var value = document.getElementById("comment_content").value;
+
+      var re = '';
+
+      for(var i=0;i<forbiddenArray.length;i++){
+        if(i==forbiddenArray.length-1)
+          re+=forbiddenArray[i];
+        else
+          re+=forbiddenArray[i]+"|";
+      }
+      //定义正则表示式对象
+      //利用RegExp可以动态生成正则表示式
+      var pattern = new RegExp(re,"g");
+      if(pattern.test(value)){
+        alert("含敏感词汇！");
+        return false;
+      }else{
+        return true;
+      }
+    }
+  </script>
+
 </head>
 <body class="news-index">
 <div class="logo-search area">
@@ -39,14 +73,15 @@
   <div class="product-list right">
     <c:choose>
       <c:when test="${user_login != null}">
-        欢迎：${user_login.name}
+        <a href="userhome.jsp?user_id=${user_login.id}">欢迎:${user_login.name}</a>
+        <button class="button"><a href="home.jsp">退出登录</a></button>
       </c:when>
       <c:when test="${author_login_info != null}">
-        欢迎/作者：${author_login_info.username}
+        <a href="news-author/authormain.html">欢迎/作者：${author_login_info.username}</a>
         <button class="button"><a href="home.jsp">退出登录</a></button>
       </c:when>
       <c:when test="${login_info != null}">
-        欢迎/管理员：${login_info.username}
+        <a href="news-admin/main.html">欢迎/管理员：${login_info.username}</a>
         <button class="button"><a href="home.jsp">退出登录</a></button>
       </c:when>
       <c:otherwise>
@@ -88,12 +123,43 @@
             </div>
             <hr>
           </div>
+          <div class="panel-body" style="padding-bottom:30px;">
+            <div class="panel-body-main">
+              <form id="user" action="AddCommentServlet" method="post">
+                <input type="hidden" value="${Newsdetail.id}" name="news_id">
+                <input type="hidden" value="${user_login.id}" name="user_id">
+                <input type="text" id="comment_content" placeholder="期待您的评论" name="comment_content"/>
+                <label for="comment_content"></label>
+                <input type="submit" value="提交" onclick="return Checkfunc()"/>
+              </form>
+            </div>
+            <hr>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <!-- end: content -->
+<div id="conmment">
+    <table border="1" cellspacing="2" bgcolor="#ADD8E6" >
+      <tr align="center">
+        <td width="100">用户ID</td>
+        <td width="160">评论内容</td>
+        <td width="200">创建时间</td>
+        <td width="200">更新时间</td>
+      </tr>
+      <c:forEach items="${newsComment}" var="comment">
+        <tr align="center">
+          <td>${comment.user_id}</td>
+          <td>${comment.content}</td>
+          <td>${comment.create_time}</td>
+          <td>${comment.update_time}</td>
+        </tr>
+      </c:forEach>
+
+    </table>
+</div>
 
 <style>
   .panel-body-main{

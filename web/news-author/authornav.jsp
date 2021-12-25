@@ -46,7 +46,7 @@ pageEncoding="UTF-8"%>
                 <li class="nav-li last-nav-li">
                 	<a href="javascript:;" class="ue-clear"><i class="nav-ivon"></i><span class="nav-text">评论管理</span></a>
                     <ul class="subnav">
-                        <li class="subnav-li" data-id="14" href="deleteadmintable.jsp"><a href="javascript:;" class="ue-clear"><i class="subnav-icon"></i><span class="subnav-text">删除评论</span></a></li>
+                        <li class="subnav-li" data-id="14" href="commenttable.jsp?authorid=${author_login_info.id}"><a href="javascript:;" class="ue-clear"><i class="subnav-icon"></i><span class="subnav-text">删除评论</span></a></li>
                     </ul>
                 </li>
             </ul>

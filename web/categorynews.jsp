@@ -40,10 +40,17 @@
   <div class="product-list right">
     <c:choose>
       <c:when test="${user_login != null}">
-        欢迎：${user_login.name}
+        <a href="userhome.jsp?user_id=${user_login.id}">欢迎:${user_login.name}</a>
+        <button class="button"><a href="home.jsp">退出登录</a></button>
+      </c:when>
+
+      <c:when test="${author_login_info != null}">
+        <a href="news-author/authormain.html">欢迎/作者：${author_login_info.username}</a>
+        <button class="button"><a href="home.jsp">退出登录</a></button>
       </c:when>
       <c:when test="${login_info != null}">
-        欢迎：${login_info.username}
+        <a href="news-admin/main.html">欢迎/管理员：${login_info.username}</a>
+        <button class="button"><a href="home.jsp">退出登录</a></button>
       </c:when>
       <c:otherwise>
         <div class="icon-user">

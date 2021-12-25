@@ -25,7 +25,7 @@ import com.news.pojo.News;
 /**
  * Servlet Filter implementation class NewsListFilter
  */
-@WebFilter(filterName="/AuthorNewsList" ,urlPatterns={"/news-author/authorshow.jsp", "/news-author/authordeletenews.jsp"})
+@WebFilter(filterName="/AuthorNewsList" ,urlPatterns={"/news-author/authorshow.jsp","/news-author/commenttable.jsp", "/news-author/authordeletenews.jsp"})
 public class AuthorNewsList implements Filter {
     /**
      * Default constructor.
@@ -53,7 +53,7 @@ public class AuthorNewsList implements Filter {
         System.out.println(author_id);
         try {
             Statement createStatement = connection.createStatement();
-            String sql="select * from news where authorId='" + author_id+"'";
+            String sql="select * from news where authorId='" + author_id+"' and state=1";
             ResultSet executeQuery = createStatement.executeQuery(sql);
             ArrayList<News> list = new ArrayList<>();
             while(executeQuery.next()){
@@ -75,13 +75,13 @@ public class AuthorNewsList implements Filter {
                 news.setState(state);
                 news.setCreate_date(create_date);
                 news.setUpdate_date(update_date);
-
                 list.add(news);
             }
+            System.out.println(author_id);
             System.out.println("authornewsfilter");
             HttpServletRequest request2 = (HttpServletRequest) request;
             HttpSession session = request2.getSession();
-            session.setAttribute("authornews", list);
+            session.setAttribute("publishauthornews", list);
             chain.doFilter(request, response);
         } catch (SQLException e) {
             // TODO Auto-generated catch block

@@ -1,8 +1,6 @@
 package com.news.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Objects;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,45 +9,57 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.news.dao.NewsDao;
 import com.news.dao.SearchDao;
+
+
+
 import com.news.pojo.News;
 
 /**
- * Servlet implementation class ContentsearchServlet
+ * Servlet implementation class NewsUpdateServlet
  */
-@WebServlet("/NewsSearchServlet")
-public class NewsSearchServlet extends HttpServlet {
+@WebServlet("/CheckNewsServlet")
+public class CheckNewsServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
     /**
-     * Default constructor.
+     * @see HttpServlet#HttpServlet()
      */
-    public NewsSearchServlet() {
+    public CheckNewsServlet() {
+        super();
         // TODO Auto-generated constructor stub
     }
-
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
+        //response.getWriter().append("Served at: ").append(request.getContextPath());
         request.setCharacterEncoding("UTF-8");
-        String news_id = request.getParameter("newsid");
-        String action = request.getParameter("action");
-        //System.out.println(news_id);
-        SearchDao searchDao = new SearchDao();
-        System.out.println("action");
-        System.out.println(action);
-        News news = searchDao.SearchNewsByID(news_id);
-        HttpSession session = request.getSession();
-        session.setAttribute("Newsdetail", news);
-        if(action.equals("author")){
-            response.sendRedirect("news-author/authorupdatenews.jsp");
+        String id = request.getParameter("newsid");
+        SearchDao searchDao=new SearchDao();
+        News news= searchDao.SearchNewsByID(id);
+        news.setState(1);
+        NewsDao newsDao = new NewsDao();
+        int updateNews = newsDao.updateNews(news);
+        if(updateNews!=0){
+            String msg="success";
+            HttpSession session = request.getSession();
+            session.setAttribute("code",msg);
+            response.sendRedirect("news-admin/checknews.jsp");
         }
-        if(action.equals("user")) {response.sendRedirect("newsitem.jsp?newsid="+news_id);}
-        if(action.equals("admin")) {response.sendRedirect("news-admin/updatenews.jsp");}
-    }
 
+        else{
+            String msg="error";
+            HttpSession session = request.getSession();
+            session.setAttribute("code",msg);
+            response.sendRedirect("news-admin/msg.jsp");
+
+
+
+        }
+
+    }
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
@@ -59,3 +69,4 @@ public class NewsSearchServlet extends HttpServlet {
     }
 
 }
+
