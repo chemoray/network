@@ -10,19 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.news.dao.AdminDao;
+import com.news.dao.AuthorDao;
 import com.news.pojo.AdminUser;
+import com.news.pojo.Author;
 
 /**
- * Servlet implementation class UpdateAdminServlet
+ * Servlet implementation class UpdateAuthorServlet
  */
-@WebServlet("/UpdateAdminServlet")
-public class UpdateAdminServlet extends HttpServlet {
+@WebServlet("/UpdateAuthorServlet")
+public class UpdateAuthorServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateAdminServlet() {
+    public UpdateAuthorServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,18 +43,23 @@ public class UpdateAdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         //doGet(request, response);
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        int admin_id = Integer.parseInt(id);
-        AdminUser adminUser = new AdminUser();
-        adminUser.setId(admin_id);
-        adminUser.setUsername(username);
-        adminUser.setPassword(password);
-        AdminDao adminDao = new AdminDao();
-        int admin = adminDao.updateAdmin(adminUser);
-        if (admin != 0) {
-            response.sendRedirect("news-admin/admintable.jsp");
+        int newsnumber = Integer.parseInt(request.getParameter("newsnumber"));
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        Author author = new Author();
+        author.setId(id);
+        author.setNewsnumber(newsnumber);
+        author.setPassword(password);
+        author.setEmail(email);
+        author.setPhone(phone);
+        author.setUsername(username);
+        AuthorDao authorDao = new AuthorDao();
+        int update = authorDao.updateAuthor(author);
+        if (update != 0) {
+            response.sendRedirect("news-admin/authortable.jsp");
         }else {
             String msg = "error";
             HttpSession session = request.getSession();

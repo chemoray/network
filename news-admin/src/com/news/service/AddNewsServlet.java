@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.news.convertor.StringToInt;
 import com.news.convertor.StringToSqlDate;
+import com.news.dao.AuthorDao;
 import com.news.dao.NewsDao;
 import com.news.pojo.News;
 import com.news.pojo.Author;
@@ -73,7 +74,6 @@ public class AddNewsServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("code",msg);
             response.sendRedirect("news-author/msg.jsp");
-
         }else{
             String msg="error";
             HttpSession session = request.getSession();

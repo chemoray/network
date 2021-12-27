@@ -2,6 +2,7 @@ package com.news.service;
 
 
 import java.io.IOException;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.news.dao.AdminDao;
-import com.news.pojo.AdminUser;
+import com.news.convertor.StringToSqlDate;
+import com.news.dao.AuthorDao;
+import com.news.pojo.Author;
 
 /**
- * Servlet implementation class AddAdminServlet
+ * Servlet implementation class AddAuthorServlet
  */
-@WebServlet("/AddAdminServlet")
-public class AddAdminServlet extends HttpServlet {
+@WebServlet("/AddAuthorServlet")
+public class AddAuthorServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddAdminServlet() {
+    public AddAuthorServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,16 +42,24 @@ public class AddAdminServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String username = request.getParameter("username");
+        String username = request.getParameter("authorname");
         String password = request.getParameter("password");
-        AdminUser adminUser = new AdminUser();
-        adminUser.setUsername(username);
-        adminUser.setPassword(password);
-        adminUser.setState(1);
-        AdminDao adminDao = new AdminDao();
-        int insertAdmin = adminDao.insertAdmin(adminUser);
-        if (insertAdmin != 0) {
-            response.sendRedirect("news-admin/admintable.jsp");
+        String authorphone = request.getParameter("authorphone");
+        String authoremail = request.getParameter("authoremail");
+        Author author = new Author();
+        author.setPhone(authorphone);
+        author.setPassword(password);
+        author.setUsername(username);
+        author.setEmail(authoremail);
+        author.setNewsnumber(0);
+        java.util.Date date = new java.util.Date();
+        author.setCreate_date(new Date(date.getTime()));
+
+
+        AuthorDao authorDao = new AuthorDao();
+        int insertAuthor = authorDao.insertAuthor(author);
+        if (insertAuthor  != 0) {
+            response.sendRedirect("news-admin/authortable.jsp");
 			/*String msg = "success";
 			HttpSession session = request.getSession();
 			session.setAttribute("code", msg);

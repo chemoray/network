@@ -4,10 +4,7 @@
 * */
 package com.news.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 import com.news.dbutils.C3p0Utils;
 import com.news.pojo.Author;
@@ -76,6 +73,36 @@ public class AuthorDao{
                 System.out.println(author_name);
                 System.out.println(author_id);
                 return author2;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+    public Author selectAuthorByID(int id){
+        try {
+            Connection connection = C3p0Utils.getConnection();
+            Statement statement = connection.createStatement();
+            String sql = "select * from author where authorId = " + id;
+            ResultSet executeQuery = statement.executeQuery(sql);
+            if (executeQuery.next()) {
+                Author author = new Author();
+                int authorId = executeQuery.getInt("authorId");
+                String authorname = executeQuery.getString("authorname");
+                String authoremail = executeQuery.getString("authoremail");
+                String authorphone = executeQuery.getString("authorphone");
+                String password = executeQuery.getString("password");
+                int newsnumber = executeQuery.getInt("newsnumber");
+                Date create_date = executeQuery.getDate("create_date");
+                author.setPhone(authorphone);
+                author.setUsername(authorname);
+                author.setId(authorId);
+                author.setPassword(password);
+                author.setEmail(authoremail);
+                author.setNewsnumber(newsnumber);
+                author.setCreate_date(create_date);
+                return author;
             }
         } catch (Exception e) {
             e.printStackTrace();

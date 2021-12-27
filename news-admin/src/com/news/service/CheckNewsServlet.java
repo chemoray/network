@@ -9,11 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.news.dao.AuthorDao;
 import com.news.dao.NewsDao;
 import com.news.dao.SearchDao;
 
 
-
+import com.news.pojo.Author;
 import com.news.pojo.News;
 
 /**
@@ -42,7 +43,13 @@ public class CheckNewsServlet extends HttpServlet {
         news.setState(1);
         NewsDao newsDao = new NewsDao();
         int updateNews = newsDao.updateNews(news);
-        if(updateNews!=0){
+        int author_id=news.getAuthorId();
+        AuthorDao authorDao = new AuthorDao();
+        Author author = authorDao.selectAuthorByID(author_id);
+        int news_number=author.getNewsnumber()+1;
+        author.setNewsnumber(news_number);
+        int update =authorDao.updateAuthor(author);
+        if(updateNews!=0 && update!=0){
             String msg="success";
             HttpSession session = request.getSession();
             session.setAttribute("code",msg);
