@@ -44,6 +44,7 @@ public class UpdateAuthorServlet extends HttpServlet {
         // TODO Auto-generated method stub
         //doGet(request, response);
         int id = Integer.parseInt(request.getParameter("id"));
+        String action = request.getParameter("action");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         int newsnumber = Integer.parseInt(request.getParameter("newsnumber"));
@@ -58,8 +59,15 @@ public class UpdateAuthorServlet extends HttpServlet {
         author.setUsername(username);
         AuthorDao authorDao = new AuthorDao();
         int update = authorDao.updateAuthor(author);
+        System.out.println(action+"   =action_author");
         if (update != 0) {
-            response.sendRedirect("news-admin/authortable.jsp");
+            Author author2=authorDao.selectAuthorByID(id);
+            HttpSession session = request.getSession();
+            session.setAttribute("author_login_info", author2);
+            if(action.equals("author")){
+                response.sendRedirect("news-author/authorhome.jsp");
+            }
+            else{response.sendRedirect("news-admin/authortable.jsp");}
         }else {
             String msg = "error";
             HttpSession session = request.getSession();

@@ -3,7 +3,7 @@
 <%@ page import="com.news.pojo.AdminUser" %>
 <%@ page import="com.news.dao.UserDao" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,49 +20,7 @@ pageEncoding="UTF-8"%>
     <link href="./home_files/app.26dd445c5a4992587eb35774ac43f575.css" rel="stylesheet">
     <link href="./home_files/main-2ada0a57df.css" rel="stylesheet">
 </head>
-<body class="news-index">
-<div class="logo-search area">
-    <div class="logo left">
-        <a href="home.jsp">新闻首页</a>
-    </div>
-    <!--搜索栏-->
-    <form action="HomeSearchServlet" method="post">
-        <div class="search left" id="search">
-            <!--怎么根据热点进行搜索 value=""-->
-            <input type="text" class="search-input left" value=""
-                   data-val="key" data-spm-acode="8066" name="text">
-            <span class="search-btn"><input type="submit" class="search-icon icon" value=""></span>
-        </div>
-    </form>
-    <!--欢迎用户/注册登录-->
-    <div class="product-list right">
-        <c:choose>
-            <c:when test="${user_login != null}">
-                <a href="userhome.jsp?user_id=${user_login.id}">欢迎:${user_login.name}</a>
-                <button class="button"><a href="home.jsp">退出登录</a></button>
-            </c:when>
-
-            <c:when test="${author_login_info != null}">
-                <a href="news-author/authormain.html">欢迎/作者：${author_login_info.username}</a>
-                <button class="button"><a href="home.jsp">退出登录</a></button>
-            </c:when>
-            <c:when test="${login_info != null}">
-                <a href="news-admin/main.html">欢迎/管理员：${login_info.username}</a>
-                <button class="button"><a href="home.jsp">退出登录</a></button>
-            </c:when>
-            <c:otherwise>
-                <div class="icon-user">
-                    <button class="button"><a href="userlogin.html">登陆</a></button>
-                    <button class="button"><a href="regist.jsp">注册</a></button>
-                    <button class="button"><a href="login.html">管理员</a></button>
-                </div>
-            </c:otherwise>
-        </c:choose>
-    </div>
-</div>
-<div class="news-nav area">
-    <li class="index cur" align="center">欢迎来到我的主页！</li>
-</div>
+<body></body>
 <div class="security_content">
     <div class="security-right">
         <div data-v-d88496a2="" class="security-right-title">
@@ -81,7 +39,7 @@ pageEncoding="UTF-8"%>
                             <div class="el-input">
                                 <!---->
                                 <!---->
-                                <span class="userinfo-descript">${user_login.name}</span>
+                                <span class="userinfo-descript">${author_login_info.username}</span>
                                 <!---->
                                 <!---->
                             </div>
@@ -89,9 +47,30 @@ pageEncoding="UTF-8"%>
                         </div>
                     </div>
                     <div class="el-form-item user-nick-rel-name">
-                        <label class="el-form-item__label">用户ID:</label>
+                        <label class="el-form-item__label">作者ID:</label>
                         <div class="el-form-item__content">
-                            <span class="userinfo-descript">${user_login.id}</span>
+                            <span class="userinfo-descript">${author_login_info.id}</span>
+                            <!---->
+                        </div>
+                    </div>
+                    <div class="el-form-item user-nick-rel-name">
+                        <label class="el-form-item__label">邮 箱:</label>
+                        <div class="el-form-item__content">
+                            <span class="userinfo-descript">${author_login_info.email}</span>
+                            <!---->
+                        </div>
+                    </div>
+                    <div class="el-form-item user-nick-rel-name">
+                        <label class="el-form-item__label">号 码:</label>
+                        <div class="el-form-item__content">
+                            <span class="userinfo-descript">${author_login_info.phone}</span>
+                            <!---->
+                        </div>
+                    </div>
+                    <div class="el-form-item user-nick-rel-name">
+                        <label class="el-form-item__label">发布新闻数:</label>
+                        <div class="el-form-item__content">
+                            <span class="userinfo-descript">${author_login_info.newsnumber}</span>
                             <!---->
                         </div>
                     </div>
@@ -100,21 +79,20 @@ pageEncoding="UTF-8"%>
                         <div class="el-form-item__content">
                             <div class="el-date-editor el-input el-date-editor--date" id="el-date-pick">
                                 <!---->
-                                <span class="userinfo-descript">${user_login.create_date}</span>
+                                创建日期: <span class="userinfo-descript">${author_login_info.create_date}</span>
                                 <!---->
                                 <!---->
                             </div><!---->
                         </div>
                     </div>
-
-
                     <div class="el-form-item user-my-btn">
                         <!---->
                         <div class="el-form-item__content">
                             <div class="padding-dom">
                                 <div class="user-my-btn-warp">
-                                        <!----><!---->
-                                    <a href="updateuserinfo.jsp" align="center">编辑个人信息</a>
+                                    <!----><!---->
+                                    <a href="updateauthorinfo.jsp" align="center">编辑个人信息</a>
+
                                 </div>
                             </div>
                         </div>
@@ -122,37 +100,6 @@ pageEncoding="UTF-8"%>
                 </form>
             </div>
         </div>
-        <div data-v-d88496a2="" class="security-right-title">
-            <span data-v-d88496a2="" class="security-right-title-icon">
-
-            </span>
-            <span data-v-d88496a2="" class="security-right-title-text">我的评论</span>
-        </div>
-            <!---->
-            <div class="user-setting-warp">
-                <div id="conmment" align="center">
-                    <table border="1" cellspacing="2" bgcolor="#ADD8E6" >
-                        <tr align="center">
-                            <td width="100">用户ID</td>
-                            <td width="160">评论内容</td>
-                            <td width="200">创建时间</td>
-                            <td width="200">更新时间</td>
-                            <td width="100">操作</td>
-                        </tr>
-                        <c:forEach items="${userComment}" var="comment">
-                            <tr align="center">
-                                <td>${comment.user_id}</td>
-                                <td>${comment.content}</td>
-                                <td>${comment.create_time}</td>
-                                <td>${comment.update_time}</td>
-                                <td><a href="UserCommentSearchServlet?comment_id=${comment.comment_id}&action=user">编辑</a>&nbsp;&nbsp;&nbsp;
-                                    <a href="DeleteCommentServlet?comment_id=${comment.comment_id}&action=user">删除</a>
-                            </tr>
-                        </c:forEach>
-
-                    </table>
-                </div>
-            </div>
     </div>
 </div>
 </body>

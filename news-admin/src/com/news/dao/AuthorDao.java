@@ -65,13 +65,20 @@ public class AuthorDao{
             ResultSet executeQuery = statement.executeQuery(sql);
             if (executeQuery.next()) {
                 Author author2 = new Author();
-                String author_name = executeQuery.getString("authorname");
-                author2.setUsername(author_name);
-                int author_id = executeQuery.getInt("authorId");
-                author2.setId(author_id);
-                System.out.println("authordao sql");
-                System.out.println(author_name);
-                System.out.println(author_id);
+                int authorId = executeQuery.getInt("authorId");
+                String authorname = executeQuery.getString("authorname");
+                String authoremail = executeQuery.getString("authoremail");
+                String authorphone = executeQuery.getString("authorphone");
+                String password = executeQuery.getString("password");
+                int newsnumber = executeQuery.getInt("newsnumber");
+                Date create_date = executeQuery.getDate("create_date");
+                author2.setPhone(authorphone);
+                author2.setUsername(authorname);
+                author2.setId(authorId);
+                author2.setPassword(password);
+                author2.setEmail(authoremail);
+                author2.setNewsnumber(newsnumber);
+                author2.setCreate_date(create_date);
                 return author2;
             }
         } catch (Exception e) {

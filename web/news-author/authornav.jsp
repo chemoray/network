@@ -26,6 +26,7 @@ pageEncoding="UTF-8"%>
                 	<a href="javascript:;" class="ue-clear"><i class="nav-ivon"></i><span class="nav-text">首页</span></a>
                     <ul class="subnav">
                     	<li class="subnav-li" href="index.html" data-id="0"><a href="javascript:;" class="ue-clear"><i class="subnav-icon"></i><span class="subnav-text">首页</span></a></li>
+                        <li class="subnav-li" href="authorhome.jsp" data-id="1"><a href="javascript:;" class="ue-clear"><i class="subnav-icon"></i><span class="subnav-text">作者主页</span></a></li>
                     </ul>
                 </li>
             
